@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -5,9 +6,12 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
+import moment from 'moment';
 import {
+  Button,
+  Dimensions,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -31,6 +35,7 @@ type SectionProps = PropsWithChildren<{
 
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -56,43 +61,59 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 function App(): JSX.Element {
+  const [time, setTime] = useState('');
   const isDarkMode = useColorScheme() === 'dark';
-
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // format: 5/18   6:30 am
+  const handleTime = () => {
+    // let today = new Date();
+    let time = moment().format('MM/DD  h:mm A');
+    setTime(time);
+    // let month = today.getMonth() + 1;
+    // let date = today.getDate();
+    // let hour = today.getHours();
+    // let minutes = today.getMinutes();
+  };
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
+    <SafeAreaView style={{backgroundColor: 'dodgerblue', flex: 1}}>
+      <View style={{backgroundColor: 'pink', flex: 1}}>
         <View
           style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            backgroundColor: 'tomato',
+            flex: 0.5,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          <Text style={{fontSize: 30}}>Clin Clon App</Text>
         </View>
-      </ScrollView>
+        <View style={{backgroundColor: 'gold', flex: 0.5}}>
+          <Button title="View details" color="#000" />
+        </View>
+        <View style={{backgroundColor: 'green', flex: 1}}>
+          <Button title="Record Time" color="#000" onPress={handleTime} />
+          <Text style={{textAlign: 'center'}}>{time}</Text>
+        </View>
+      </View>
     </SafeAreaView>
+    // <SafeAreaView style={backgroundStyle}>
+    //   <StatusBar
+    //     barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+    //     backgroundColor={backgroundStyle.backgroundColor}
+    //   />
+    //   <View
+    //     style={{
+    //       backgroundColor: 'dodgerblue',
+    //       flex: 1,
+    //       alignItems: 'center',
+    //       justifyContent: 'center',
+    //     }}>
+    //     <Text style={{color: '#006600', fontSize: 30}}>Clin Clon App</Text>
+    //   </View>
+    // </SafeAreaView>
   );
 }
 
