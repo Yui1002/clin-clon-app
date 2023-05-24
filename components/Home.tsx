@@ -1,23 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  Button,
-  Dimensions,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Button, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-// import Header from './Header';
-// import ViewDetailsButton from './View_Details_Button';
-// import History from './History';
-// import RecordButton from './RecordButton';
-// import RecordedTime from './RecordedTime';
 import moment from 'moment';
 import AsyncStorage from '@react-native-community/async-storage';
 
