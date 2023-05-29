@@ -9,10 +9,7 @@ type Props = {};
 
 const Home = ({navigation}: any) => {
   const [time, setTime] = useState('');
-
-  // useEffect(() => {
-  //   removeItemValue('records');
-  // }, []);
+  const [itemCount, setItemCount] = useState<number>(0);
 
   // format: 5/18   6:30 am
   const handleTime = () => {
@@ -24,23 +21,24 @@ const Home = ({navigation}: any) => {
   };
 
   const storeData = async (currentTime: Date) => {
-    // right now, current time is local time
-    // convert current time to utc
     const UTCTime = currentTime.toISOString();
-    // store as utc
-    // AsyncStorage.setItem('records', JSON.stringify(UTCTime));
-    // when retrieve, get user's current timezone
+
     AsyncStorage.getItem('records', (_err, result) => {
-      // const record = [currentTime];
       if (result != null) {
-        // storage is not empty
-        console.log('data found: ', result);
-        let newRecord = JSON.parse(result).concat(UTCTime);
+        let itemLength = JSON.parse(result).length;
+        console.log('item length: ', itemLength);
+        let newRecord = JSON.parse(result).concat({
+          id: itemLength,
+          time: UTCTime,
+        });
+        // console.log('new Record: ', newRecord);
         AsyncStorage.setItem('records', JSON.stringify(newRecord));
       } else {
-        // storage is empty
-        console.log('data not found');
-        AsyncStorage.setItem('records', JSON.stringify([UTCTime]));
+        console.log('data is empty');
+        AsyncStorage.setItem(
+          'records',
+          JSON.stringify([{id: 0, time: UTCTime}]),
+        );
       }
     });
   };
