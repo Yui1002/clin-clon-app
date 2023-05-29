@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Button, Text, View, Pressable} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import {StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -10,27 +10,48 @@ type Props = {};
 const Home = ({navigation}: any) => {
   const [time, setTime] = useState('');
 
+  // useEffect(() => {
+  //   removeItemValue('records');
+  // }, []);
+
   // format: 5/18   6:30 am
   const handleTime = () => {
     console.log('record clicked');
-    let currentTime = moment().format('MM/DD  h:mm A');
+    // let currentTime = moment().format('MM/DD  h:mm A');
+    let currentTime = new Date();
     storeData(currentTime);
-    setTime(currentTime);
+    setTime(moment().format('MM/DD  h:mm A'));
   };
 
-  const storeData = async (currentTime: string) => {
-    console.log('currentTime: ', currentTime);
+  const storeData = async (currentTime: Date) => {
+    // right now, current time is local time
+    // convert current time to utc
+    const UTCTime = currentTime.toISOString();
+    // store as utc
+    // AsyncStorage.setItem('records', JSON.stringify(UTCTime));
+    // when retrieve, get user's current timezone
     AsyncStorage.getItem('records', (_err, result) => {
-      const record = [currentTime];
+      // const record = [currentTime];
       if (result != null) {
+        // storage is not empty
         console.log('data found: ', result);
-        let newRecord = JSON.parse(result).concat(currentTime);
+        let newRecord = JSON.parse(result).concat(UTCTime);
         AsyncStorage.setItem('records', JSON.stringify(newRecord));
       } else {
+        // storage is empty
         console.log('data not found');
-        AsyncStorage.setItem('records', JSON.stringify(record));
+        AsyncStorage.setItem('records', JSON.stringify([UTCTime]));
       }
     });
+  };
+
+  const removeItemValue = async (key: any) => {
+    try {
+      await AsyncStorage.removeItem(key);
+      return true;
+    } catch (exception) {
+      return false;
+    }
   };
 
   return (
@@ -38,7 +59,9 @@ const Home = ({navigation}: any) => {
       <View style={{flex: 0.2, marginTop: '10%'}}>
         <Text style={{fontSize: 30}}>Clin Clon App</Text>
       </View>
-      <Pressable style={styles.viewDetailsBtn} onPress={() => navigation.navigate('History')}>
+      <Pressable
+        style={styles.viewDetailsBtn}
+        onPress={() => navigation.navigate('History')}>
         <Text>View Details</Text>
       </Pressable>
       <Pressable style={styles.recordTimeBtn} onPress={handleTime}>

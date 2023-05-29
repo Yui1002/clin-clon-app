@@ -19,7 +19,10 @@ const History = () => {
 
   return (
     <View>
-      <FlatList data={records} renderItem={({item}) => <Text>{item}</Text>} />
+      <FlatList
+        data={records}
+        renderItem={({item}) => <Text>{new Date(item).toLocaleString()}</Text>}
+      />
     </View>
   );
 };
