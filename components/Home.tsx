@@ -9,7 +9,6 @@ type Props = {};
 
 const Home = ({navigation}: any) => {
   const [time, setTime] = useState('');
-  const [itemCount, setItemCount] = useState<number>(0);
 
   // format: 5/18   6:30 am
   const handleTime = () => {
@@ -43,19 +42,13 @@ const Home = ({navigation}: any) => {
     });
   };
 
-  const removeItemValue = async (key: any) => {
-    try {
-      await AsyncStorage.removeItem(key);
-      return true;
-    } catch (exception) {
-      return false;
-    }
-  };
-
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <View style={{flex: 0.2, marginTop: '10%'}}>
         <Text style={{fontSize: 30}}>Clin Clon App</Text>
+      </View>
+      <View>
+        <Text>Current Datetime: {moment().format('MM/DD  h:mm A')}</Text>
       </View>
       <Pressable
         style={styles.viewDetailsBtn}

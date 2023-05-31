@@ -52,6 +52,7 @@ const History = () => {
         marginTop: '10%',
       }}>
       <FlatList
+        style={styles.table}
         data={records}
         renderItem={item}
         keyExtractor={item => item.id.toString()}
@@ -71,6 +72,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: '#2196F3',
     marginBottom: 30,
+  },
+  table: {
+    borderBottomColor: 'red',
   },
 });
 
