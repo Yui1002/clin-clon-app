@@ -1,6 +1,7 @@
 import {View, Text, FlatList, Pressable, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 type Props = {};
 
@@ -11,6 +12,12 @@ export interface RecordsType {
 
 const History = () => {
   const [records, setRecords] = useState<RecordsType[] | undefined>(undefined);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/test')
+    .then(data => console.log(data))
+    .catch((e) => console.log('error: ', e));
+  });
 
   useEffect(() => {
     AsyncStorage.getItem('records', (_err, result) => {
