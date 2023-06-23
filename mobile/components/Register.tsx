@@ -1,13 +1,27 @@
 import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import axios from 'axios';
 
 const Register = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [passwordSelected, setPasswordSelected] = useState(false);
   const [OTPSelected, setOTPSelected] = useState(false);
+
+  const onFirstnameChange = (e: any) => {
+    setFirstName(e.target.value);
+  };
+
+  const onlastnameChange = (e: any) => {
+    setLastName(e.target.value);
+  };
+
+  const onEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
 
   const onPasswordSelect = () => {
     setPasswordSelected(!passwordSelected);
@@ -19,46 +33,61 @@ const Register = () => {
     passwordSelected ? setPasswordSelected(!passwordSelected) : null;
   };
 
+  const onPasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
+
+  const onSubmit = () => {
+    // send to server
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Join</Text>
       <View style={styles.name_container}>
         <View style={styles.name_sub_container}>
           <Text>First Name *</Text>
-          <TextInput style={styles.input_name} />
+          <TextInput style={styles.input_name} onChange={onFirstnameChange} />
         </View>
         <View style={styles.name_sub_container}>
           <Text>Last Name *</Text>
-          <TextInput style={styles.input_name} />
+          <TextInput style={styles.input_name} onChange={onlastnameChange} />
         </View>
       </View>
-      <View>
-        <View style={styles.email_container}>
-          <Text>Email Address *</Text>
-          <TextInput style={styles.input_email} />
+      <View style={styles.email_container}>
+        <Text>Email Address *</Text>
+        <TextInput style={styles.input_email} onChange={onEmailChange} />
+      </View>
+      <View style={styles.authentication_container}>
+        <Text>Authenticate using </Text>
+        <View style={styles.password_container}>
+          <Text>Password </Text>
+          <TouchableOpacity onPress={onPasswordSelect}>
+            <View style={styles.radioBtn}>
+              {passwordSelected ? <View style={styles.selected} /> : null}
+            </View>
+          </TouchableOpacity>
         </View>
-        <View style={styles.authentication_container}>
-          <Text>Authenticate using </Text>
-          <View style={styles.password_container}>
-            <Text>Password </Text>
-            <TouchableOpacity onPress={onPasswordSelect}>
-              <View style={styles.radioBtn}>
-                {passwordSelected ? <View style={styles.selected} /> : null}
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.OTP_container}>
-            <Text>OTP </Text>
-            <TouchableOpacity onPress={onOTPSelect}>
-              <View style={styles.radioBtn}>
-                {OTPSelected ? <View style={styles.selected} /> : null}
-              </View>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.OTP_container}>
+          <Text>OTP </Text>
+          <TouchableOpacity onPress={onOTPSelect}>
+            <View style={styles.radioBtn}>
+              {OTPSelected ? <View style={styles.selected} /> : null}
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
+      {passwordSelected ? (
+        <View>
+          <Text>Password</Text>
+          <TextInput
+            style={styles.input_password}
+            onChange={onPasswordChange}
+          />
+        </View>
+      ) : null}
       <View style={styles.joinBtn}>
-        <Button title="Join" color="#fff" />
+        <Button title="Join" color="#fff" onPress={onSubmit}/>
       </View>
     </View>
   );
@@ -94,10 +123,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '90%',
   },
+  input_password: {
+    height: 40,
+    borderWidth: 1,
+    width: '90%',
+  },
   authentication_container: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   password_container: {
     display: 'flex',
@@ -126,6 +160,7 @@ const styles = StyleSheet.create({
   joinBtn: {
     height: 40,
     borderRadius: 20,
+    marginTop: 20,
     backgroundColor: '#2089DC',
   },
 });
