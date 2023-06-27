@@ -2,6 +2,7 @@ import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';
+import {LOCAL_HOST_URL} from '../config.js';
 
 const Register = () => {
   const [firstName, setFirstName] = useState('');
@@ -12,6 +13,7 @@ const Register = () => {
   const [OTPSelected, setOTPSelected] = useState(false);
 
   const onFirstnameChange = (e: any) => {
+    console.log(e.target.value);
     setFirstName(e.target.value);
   };
 
@@ -39,6 +41,18 @@ const Register = () => {
 
   const onSubmit = () => {
     // send to server
+    console.log('submitted');
+    const authStyle = passwordSelected ? 'password' : 'OTP';
+    axios
+      .post(`${LOCAL_HOST_URL}/register`, {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        authStyle: authStyle,
+      })
+      .then(res => console.log('data: ', res.data))
+      .catch((e) => console.log('e: ', e))
   };
 
   return (
@@ -87,7 +101,7 @@ const Register = () => {
         </View>
       ) : null}
       <View style={styles.joinBtn}>
-        <Button title="Join" color="#fff" onPress={onSubmit}/>
+        <Button title="Join" color="#fff" onPress={onSubmit} />
       </View>
     </View>
   );
