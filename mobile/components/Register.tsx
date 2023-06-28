@@ -12,19 +12,6 @@ const Register = () => {
   const [passwordSelected, setPasswordSelected] = useState(false);
   const [OTPSelected, setOTPSelected] = useState(false);
 
-  const onFirstnameChange = (e: any) => {
-    console.log(e.target.value);
-    setFirstName(e.target.value);
-  };
-
-  const onlastnameChange = (e: any) => {
-    setLastName(e.target.value);
-  };
-
-  const onEmailChange = (e: any) => {
-    setEmail(e.target.value);
-  };
-
   const onPasswordSelect = () => {
     setPasswordSelected(!passwordSelected);
     OTPSelected ? setOTPSelected(!OTPSelected) : null;
@@ -35,24 +22,20 @@ const Register = () => {
     passwordSelected ? setPasswordSelected(!passwordSelected) : null;
   };
 
-  const onPasswordChange = (e: any) => {
-    setPassword(e.target.value);
-  };
-
   const onSubmit = () => {
-    // send to server
-    console.log('submitted');
     const authStyle = passwordSelected ? 'password' : 'OTP';
     axios
       .post(`${LOCAL_HOST_URL}/register`, {
         firstName: firstName,
         lastName: lastName,
         email: email,
+        status: 'active',
         password: password,
-        authStyle: authStyle,
+        // authStyle: authStyle,
+        createDate: new Date(),
       })
       .then(res => console.log('data: ', res.data))
-      .catch((e) => console.log('e: ', e))
+      .catch(e => console.log('e: ', e));
   };
 
   return (
@@ -61,16 +44,16 @@ const Register = () => {
       <View style={styles.name_container}>
         <View style={styles.name_sub_container}>
           <Text>First Name *</Text>
-          <TextInput style={styles.input_name} onChange={onFirstnameChange} />
+          <TextInput style={styles.input_name} onChangeText={setFirstName} />
         </View>
         <View style={styles.name_sub_container}>
           <Text>Last Name *</Text>
-          <TextInput style={styles.input_name} onChange={onlastnameChange} />
+          <TextInput style={styles.input_name} onChangeText={setLastName} />
         </View>
       </View>
       <View style={styles.email_container}>
         <Text>Email Address *</Text>
-        <TextInput style={styles.input_email} onChange={onEmailChange} />
+        <TextInput style={styles.input_email} onChangeText={setEmail} />
       </View>
       <View style={styles.authentication_container}>
         <Text>Authenticate using </Text>
@@ -94,10 +77,7 @@ const Register = () => {
       {passwordSelected ? (
         <View>
           <Text>Password</Text>
-          <TextInput
-            style={styles.input_password}
-            onChange={onPasswordChange}
-          />
+          <TextInput style={styles.input_password} onChangeText={setPassword} />
         </View>
       ) : null}
       <View style={styles.joinBtn}>
