@@ -8,8 +8,8 @@
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {StyleSheet} from 'react-native';
 import Register from './components/Register';
+import HomePage from './components/HomePage';
 
 function App(): JSX.Element {
   const Stack = createStackNavigator();
@@ -18,28 +18,10 @@ function App(): JSX.Element {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Register" component={Register} options={{ title: 'Join' }}/>
+        <Stack.Screen name="HomePage" component={HomePage} options={{ title: 'Home Page' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

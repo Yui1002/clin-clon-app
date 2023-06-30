@@ -15,7 +15,7 @@ const rules = [
   },
 ];
 
-const Register = () => {
+const Register = ({navigation}: any) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -80,24 +80,28 @@ const Register = () => {
     validateSelect();
   };
 
-  const onSubmit = () => {
+  const onSuccess = () => {
+    navigation.navigate('HomePage');
+  };
+
+  const onSubmit = async () => {
     validateFirstName();
     validateLastName();
     validateEmail();
     validatePassword();
 
-    console.log('first name error: ', firstNameError);
-    console.log('last name error: ', lastNameError);
-    console.log('email error: ', emailError);
-    console.log('password error: ', passwordError);
-
-    if (firstNameError || lastNameError || emailError || passwordError) {
+    if (
+      firstNameError ||
+      lastNameError ||
+      emailError ||
+      passwordError ||
+      selectError
+    ) {
       return;
     }
 
-    // const authStyle = passwordSelected ? 'password' : 'OTP';
-    axios
-      .post(`${LOCAL_HOST_URL}/register`, {
+    try {
+      const response = await axios.post(`${LOCAL_HOST_URL}/register`, {
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -105,16 +109,44 @@ const Register = () => {
         password: password,
         // authStyle: authStyle,
         createDate: new Date(),
-      })
-      .then(res => console.log('data: ', res.data))
-      .catch(e => console.log('e: ', e))
-      .finally(() => {
-        setFirstNameError(false);
-        setLastNameError(false);
-        setEmailError(false);
-        setPasswordError(false);
-        setSelectError(false);
       });
+      console.log('response: ', response)
+      if (response.status === 200) {
+        console.log('here in navigation')
+        navigation.navigate('HomePage')
+      }
+    } catch (e) {
+      console.log('error: ', e);
+    } finally {
+      setFirstNameError(false);
+      setLastNameError(false);
+      setEmailError(false);
+      setPasswordError(false);
+      setSelectError(false);
+    }
+
+    // axios
+    //   .post(`${LOCAL_HOST_URL}/register`, {
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     email: email,
+    //     status: 'active',
+    //     password: password,
+    //     // authStyle: authStyle,
+    //     createDate: new Date(),
+    //   })
+    //   .then(res => {
+    //     cb();
+    //     // navigation.navigate('HomePage')
+    //   })
+    //   .catch(e => console.log('e: ', e))
+    //   .finally(() => {
+    //     setFirstNameError(false);
+    //     setLastNameError(false);
+    //     setEmailError(false);
+    //     setPasswordError(false);
+    //     setSelectError(false);
+    //   });
   };
 
   const validateFirstName = () => {
@@ -136,6 +168,7 @@ const Register = () => {
   };
 
   const validatePassword = () => {
+    passwordSelected &&
     !validator.isStrongPassword(password, {
       minLength: 8,
       minLowercase: 1,
@@ -230,7 +263,7 @@ const Register = () => {
         </View>
       ) : null}
       <View style={styles.joinBtn}>
-        <Button title="Join" color="#fff" onPress={onSubmit} />
+        <Button title="Join" color="#fff" onPress={() => onSubmit(onSuccess)} />
       </View>
     </View>
   );

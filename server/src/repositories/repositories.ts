@@ -21,8 +21,8 @@ class Repositories {
         try {
             const sql = "INSERT INTO public.owners (owner_id, first_name, last_name, email_address, status, create_date, owner_password) VALUES ($1, $2, $3, $4, $5, $6, $7);";
             const data = await client.query(sql, [uuid, user.firstName, user.lastName, user.email, user.status, user.createDate, user.password]);
-            console.log('successfully inserted', data.rowCount)
-            return 'data inserted';
+            console.log('successfully inserted!!', data.rowCount)
+            return data.rowCount;
         } catch(err) {
             console.log('error: ', err);
             return err;
