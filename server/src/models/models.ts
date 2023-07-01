@@ -14,8 +14,6 @@ class Models {
         const hashedPassword = await bcrypt.hash(user.password, saltRounds);
         user.password = hashedPassword;
         const response = await this.repositories.registerUser(user);
-        console.log('lol')
-        console.log('response in model: ', response);
         return response;
     }
 }

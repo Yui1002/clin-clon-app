@@ -9,7 +9,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Register from './components/Register';
-import HomePage from './components/HomePage';
+import Setup from './components/Setup';
+import AddUser from './components/AddUser';
 
 function App(): JSX.Element {
   const Stack = createStackNavigator();
@@ -18,7 +19,8 @@ function App(): JSX.Element {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Register" component={Register} options={{ title: 'Join' }}/>
-        <Stack.Screen name="HomePage" component={HomePage} options={{ title: 'Home Page' }}/>
+        <Stack.Screen name="Setup" component={Setup} options={{ title: 'Setup' }}/>
+        <Stack.Screen name="AddUser" component={AddUser} options={{ title: 'AddUser' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

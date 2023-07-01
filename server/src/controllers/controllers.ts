@@ -10,7 +10,6 @@ class Controllers {
 
     async registerUser(user: OwnerInterface) {
         const response = await this.models.registerUser(user);
-        console.log('response in controller: ', response)
         return response;
     }
 }

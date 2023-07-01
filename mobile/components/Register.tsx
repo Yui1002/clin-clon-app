@@ -4,6 +4,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import axios from 'axios';
 import {LOCAL_HOST_URL} from '../config.js';
 import validator from 'validator';
+import styles from '../styles/styles';
 
 const rules = [
   {label: 'One uppercase', pattern: new RegExp(/.*[A-Z]/)},
@@ -81,7 +82,7 @@ const Register = ({navigation}: any) => {
   };
 
   const onSuccess = () => {
-    navigation.navigate('HomePage');
+    navigation.navigate('Setup');
   };
 
   const onSubmit = async () => {
@@ -110,10 +111,8 @@ const Register = ({navigation}: any) => {
         // authStyle: authStyle,
         createDate: new Date(),
       });
-      console.log('response: ', response)
       if (response.status === 200) {
-        console.log('here in navigation')
-        navigation.navigate('HomePage')
+        navigation.navigate('Setup');
       }
     } catch (e) {
       console.log('error: ', e);
@@ -124,29 +123,6 @@ const Register = ({navigation}: any) => {
       setPasswordError(false);
       setSelectError(false);
     }
-
-    // axios
-    //   .post(`${LOCAL_HOST_URL}/register`, {
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     email: email,
-    //     status: 'active',
-    //     password: password,
-    //     // authStyle: authStyle,
-    //     createDate: new Date(),
-    //   })
-    //   .then(res => {
-    //     cb();
-    //     // navigation.navigate('HomePage')
-    //   })
-    //   .catch(e => console.log('e: ', e))
-    //   .finally(() => {
-    //     setFirstNameError(false);
-    //     setLastNameError(false);
-    //     setEmailError(false);
-    //     setPasswordError(false);
-    //     setSelectError(false);
-    //   });
   };
 
   const validateFirstName = () => {
@@ -268,89 +244,5 @@ const Register = ({navigation}: any) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    margin: '5%',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  name_container: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  name_sub_container: {
-    width: '50%',
-  },
-  input_name: {
-    height: 40,
-    borderWidth: 1,
-    width: '90%',
-  },
-  email_container: {
-    marginBottom: 10,
-  },
-  input_email: {
-    height: 40,
-    borderWidth: 1,
-    width: '90%',
-  },
-  input_password: {
-    height: 40,
-    borderWidth: 1,
-    width: '90%',
-  },
-  authentication_container: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  password_container: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  OTP_container: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  radioBtn: {
-    height: 24,
-    width: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  selected: {
-    height: 12,
-    width: 12,
-    borderRadius: 6,
-    marginLeft: 4,
-    backgroundColor: '#000',
-  },
-  joinBtn: {
-    height: 40,
-    borderRadius: 20,
-    marginTop: 20,
-    backgroundColor: '#2089DC',
-  },
-  form_input_error: {
-    fontSize: 10,
-    color: 'red',
-  },
-  password_passed: {
-    fontSize: 14,
-    color: '#5EBA7D',
-  },
-  password_rejected: {
-    fontSize: 14,
-    color: 'red',
-  },
-});
 
 export default Register;
