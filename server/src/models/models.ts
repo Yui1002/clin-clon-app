@@ -9,12 +9,19 @@ class Models {
         this.repositories = new Repositories();
     }
 
+    async isRegistered(email: string) {
+        const dataCount = await this.repositories.isRegistered(email);
+        console.log('data count: ', dataCount);
+        return dataCount > 0;
+    }
+
     async registerUser(user: OwnerInterface) {
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(user.password, saltRounds);
-        user.password = hashedPassword;
-        const response = await this.repositories.registerUser(user);
-        return response;
+        if (user.password !== null) {
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+            user.password = hashedPassword;
+        }
+        return await this.repositories.registerUser(user);
     }
 }
 

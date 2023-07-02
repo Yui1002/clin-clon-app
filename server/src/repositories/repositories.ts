@@ -14,6 +14,19 @@ const pool = new Pool({
 })
 
 class Repositories {
+    async isRegistered(email: string) {
+        const client = await pool.connect();
+        try {
+            const sql = "SELECT * FROM owners WHERE email_address = $1;";
+            const data = await client.query(sql, [email]);
+            return data.rowCount;
+        } catch(err) {
+            return err;
+        } finally {
+            client.release();
+        }
+    }
+
     async registerUser(user: OwnerInterface) {
         const client = await pool.connect();
         const uuid = uuidv4();

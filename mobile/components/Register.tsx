@@ -107,7 +107,7 @@ const Register = ({navigation}: any) => {
         lastName: lastName,
         email: email,
         status: 'active',
-        password: password,
+        password: OTPSelected ? null : password,
         // authStyle: authStyle,
         createDate: new Date(),
       });
