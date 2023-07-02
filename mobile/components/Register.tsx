@@ -28,6 +28,7 @@ const Register = ({navigation}: any) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [selectError, setSelectError] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(false);
 
   useEffect(() => {
     validateFirstName();
@@ -102,6 +103,7 @@ const Register = ({navigation}: any) => {
     }
 
     try {
+      console.log('hello');
       const response = await axios.post(`${LOCAL_HOST_URL}/register`, {
         firstName: firstName,
         lastName: lastName,
@@ -111,11 +113,12 @@ const Register = ({navigation}: any) => {
         // authStyle: authStyle,
         createDate: new Date(),
       });
+      console.log('response status: ', response.status);
       if (response.status === 200) {
         navigation.navigate('Setup');
       }
     } catch (e) {
-      console.log('error: ', e);
+      setIsDuplicate(true);
     } finally {
       setFirstNameError(false);
       setLastNameError(false);
@@ -240,6 +243,11 @@ const Register = ({navigation}: any) => {
       ) : null}
       <View style={styles.joinBtn}>
         <Button title="Join" color="#fff" onPress={() => onSubmit(onSuccess)} />
+      </View>
+      <View>
+        {isDuplicate && (
+          <Text style={styles.register_error}>This email already exists.</Text>
+        )}
       </View>
     </View>
   );

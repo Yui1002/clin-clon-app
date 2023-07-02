@@ -18,12 +18,10 @@ class Controllers {
 
     async registerUser(req: any, res: any) {
         const isRegistered = await this.models.isRegistered(req.body.email);
-        console.log('isRegistered: ', isRegistered);
         if (isRegistered) {
             res.status(400).send('User is already registered');
         } else {
             const response = await this.models.registerUser(req.body);
-            console.log('response: ', response)
             Number(response) > 0 ? res.sendStatus(200) : res.sendStatus(400);
         }
     }

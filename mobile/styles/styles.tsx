@@ -82,6 +82,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'red',
   },
+  register_error: {
+    color: 'red',
+    textAlign: 'center',
+    fontSize: 16,
+    marginTop: 10,
+  },
   add_user_container: {
     display: 'flex',
     flexDirection: 'row',
