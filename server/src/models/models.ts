@@ -1,5 +1,6 @@
 import Repositories from "../repositories/repositories";
 import { OwnerInterface } from "../interfaces/OwnerInterface";
+import { UserInterface } from "../interfaces/UserInterface";
 import bcrypt from 'bcrypt';
 
 class Models {
@@ -9,19 +10,33 @@ class Models {
         this.repositories = new Repositories();
     }
 
-    async isRegistered(email: string) {
-        const dataCount = await this.repositories.isRegistered(email);
-        console.log('data count: ', dataCount);
+    async isOwnerRegistered(email: string) {
+        const dataCount = await this.repositories.isOwnerRegistered(email);
         return dataCount > 0;
     }
 
-    async registerUser(user: OwnerInterface) {
-        if (user.password !== null) {
+    async isUserRegistered(username: string) {
+        const dataCount = await this.repositories.isUserRegistered(username);
+        return dataCount > 0;
+    }
+
+    async registerOwner(owner: OwnerInterface) {
+        if (owner.password !== null) {
             const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(user.password, saltRounds);
-            user.password = hashedPassword;
+            const hashedPassword = await bcrypt.hash(owner.password, saltRounds);
+            owner.password = hashedPassword;
         }
-        return await this.repositories.registerUser(user);
+        return await this.repositories.registerOwner(owner);
+    }
+
+    async getOwnerId(email: string) {
+        return await this.repositories.getOwnerId(email);
+    }
+
+    async addUser(user: UserInterface) {
+        const ownerId = await this.getOwnerId(user.ownerEmail);
+        user.ownerId = ownerId;
+        return await this.repositories.addUser(user);
     }
 }
 

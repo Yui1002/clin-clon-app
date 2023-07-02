@@ -2,9 +2,13 @@ import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/styles';
 
-const Setup = ({navigation}) => {
+const Setup = ({navigation, route}: any) => {
+  const { ownerEmail } = route.params;
+  // console.log('props: ', ownerEmail);
+  // console.log('props2: ', route.params)
+  // const [state, setState] = useState(navigation.navigation)
   const onAddUserPress = () => {
-    navigation.navigate('AddUser');
+    navigation.navigate('AddUser', {ownerEmail: route.params.ownerEmail});
   };
 
   return (

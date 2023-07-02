@@ -82,10 +82,6 @@ const Register = ({navigation}: any) => {
     validateSelect();
   };
 
-  const onSuccess = () => {
-    navigation.navigate('Setup');
-  };
-
   const onSubmit = async () => {
     validateFirstName();
     validateLastName();
@@ -103,7 +99,6 @@ const Register = ({navigation}: any) => {
     }
 
     try {
-      console.log('hello');
       const response = await axios.post(`${LOCAL_HOST_URL}/register`, {
         firstName: firstName,
         lastName: lastName,
@@ -113,9 +108,8 @@ const Register = ({navigation}: any) => {
         // authStyle: authStyle,
         createDate: new Date(),
       });
-      console.log('response status: ', response.status);
       if (response.status === 200) {
-        navigation.navigate('Setup');
+        navigation.navigate('Setup', {ownerEmail: email});
       }
     } catch (e) {
       setIsDuplicate(true);
@@ -188,6 +182,7 @@ const Register = ({navigation}: any) => {
         <Text>Email Address *</Text>
         <TextInput
           style={styles.input_email}
+          autoCapitalize="none"
           onChangeText={text => onEmailChange(text)}
         />
         {emailError && (
@@ -223,6 +218,7 @@ const Register = ({navigation}: any) => {
           <Text>Password</Text>
           <TextInput
             style={styles.input_password}
+            autoCapitalize="none"
             onChangeText={text => onPasswordChange(text)}
           />
           {rules.map(rule => {
@@ -242,7 +238,7 @@ const Register = ({navigation}: any) => {
         </View>
       ) : null}
       <View style={styles.joinBtn}>
-        <Button title="Join" color="#fff" onPress={() => onSubmit(onSuccess)} />
+        <Button title="Join" color="#fff" onPress={() => onSubmit()} />
       </View>
       <View>
         {isDuplicate && (

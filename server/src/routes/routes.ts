@@ -8,13 +8,8 @@ class Routes {
     }
 
     applyRouting(app: any) {
-        // app.post('/register', async (req: any, res: any) => {
-        //     const response = await this.controllers.registerUser(req.body);
-        //     const status = (Number(response) > 0) ? 200 : 400;
-        //     res.sendStatus(status);
-        // })
-
-        app.post('/register', this.controllers.registerUser.bind(this.controllers))
+        app.post('/register', this.controllers.registerOwner.bind(this.controllers));
+        app.post('/addUser', this.controllers.addUser.bind(this.controllers));
     }
 }
 
