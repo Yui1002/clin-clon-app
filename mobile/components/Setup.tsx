@@ -1,5 +1,6 @@
 import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import styles from '../styles/styles';
 
 const Setup = ({navigation}) => {
   const onAddUserPress = () => {
@@ -7,10 +8,14 @@ const Setup = ({navigation}) => {
   };
 
   return (
-    <View>
-      <View>
-        <Button title="Add User" onPress={onAddUserPress} />
-        <Button title="Add Activity" />
+    <View style={styles.container}>
+      <View style={styles.setup_container}>
+        <View style={styles.setup_btn}>
+          <Button title="Add User" onPress={onAddUserPress} color="#fff" />
+        </View>
+        <View style={styles.setup_btn}>
+          <Button title="Add Activity" color="#fff" />
+        </View>
       </View>
     </View>
   );

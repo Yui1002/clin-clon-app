@@ -117,7 +117,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 20,
     backgroundColor: '#2089DC',
-  }
+  },
+  setup_container: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  setup_btn: {
+    width: '44%',
+    height: 40,
+    borderRadius: 20,
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: '#2089DC',
+  },
 });
 
 export default styles;
