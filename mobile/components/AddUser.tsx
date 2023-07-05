@@ -4,24 +4,32 @@ import styles from '../styles/styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import axios from 'axios';
 import {LOCAL_HOST_URL} from '../config.js';
+import constant from '../parameters/constant';
 
 const AddUser = ({route}: any) => {
-  const [items, setItems] = useState([
-    {label: 'Hourly', value: 'hourly'},
-    {label: 'Daily', value: 'daily'},
-  ]);
-  const [value, setValue] = useState(null);
-  const [open, setOpen] = useState(false);
+  // const [items, setItems] = useState([
+  //   {label: 'Hourly', value: 'hourly'},
+  //   {label: 'Daily', value: 'daily'},
+  // ]);
+  // const [statusOptions, setStatusOptions] = useState([
+  //   {label: 'Active', value: 'active'},
+  //   {label: 'Inactive', value: 'inactive'},
+  // ]);
+  const [rateTypeOpen, setRateTypeOpen] = useState(false);
+  const [statusOpen, setStatusOpen] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [rate, setRate] = useState(0);
   const [rateType, setRateType] = useState(null);
+  const [status, setStatus] = useState(null);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [usernameError, setUsernameError] = useState(false);
   const [rateError, setRateError] = useState(false);
   const [rateTypeError, setRateTypeError] = useState(false);
+  const [statusError, setStatusError] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(false);
 
   const addUser = async () => {
     validateFirstName();
@@ -29,13 +37,15 @@ const AddUser = ({route}: any) => {
     validateUsername();
     validateRate();
     validateRateType();
+    validateStatus();
 
     if (
       firstNameError ||
       lastNameError ||
       usernameError ||
       rateError ||
-      rateTypeError
+      rateTypeError ||
+      statusError
     ) {
       return;
     }
@@ -47,12 +57,14 @@ const AddUser = ({route}: any) => {
         username: username,
         rate: rate,
         rateType: rateType,
-        status: 'active',
+        status: status,
         updateDate: new Date(),
         ownerEmail: route.params.ownerEmail,
       });
     } catch (err) {
-      console.log(err);
+      setIsDuplicate(true);
+    } finally {
+      setIsDuplicate(false);
     }
   };
 
@@ -76,6 +88,12 @@ const AddUser = ({route}: any) => {
     rateType === 'hourly' || rateType === 'daily'
       ? setRateTypeError(false)
       : setRateTypeError(true);
+  };
+
+  const validateStatus = () => {
+    status === 'active' || status === 'inactive'
+      ? setStatusError(false)
+      : setStatusError(true);
   };
 
   const renderItem = ({item}) => {
@@ -142,20 +160,33 @@ const AddUser = ({route}: any) => {
           <View style={styles.add_user_sub_container}>
             <Text>rate type *</Text>
             <DropDownPicker
-              onChangeValue={text => setRateType(text)}
-              style={styles.add_user_name}
-              open={open}
-              value={value}
-              items={items}
-              setItems={setItems}
-              setValue={setValue}
-              onPress={() => setOpen(!open)}
+              open={rateTypeOpen}
+              value={rateType}
+              items={constant.rateType}
+              setOpen={() => setRateTypeOpen(!rateTypeOpen)}
+              setValue={val => setRateType(val)}
+              // setItems={item => setItems(item)}
             />
           </View>
-          <View style={styles.add_user_btn}>
-            <Button title="Add" color="#fff" onPress={addUser} />
+          <View style={styles.add_user_sub_container}>
+            <Text>status</Text>
+            <DropDownPicker
+              open={statusOpen}
+              value={status}
+              items={constant.status}
+              setOpen={() => setStatusOpen(!statusOpen)}
+              setValue={val => setStatus(val)}
+            />
           </View>
         </View>
+        <View style={styles.add_user_btn}>
+          <Button title="Add" color="#fff" onPress={addUser} />
+        </View>
+      </View>
+      <View>
+        {isDuplicate && (
+          <Text style={styles.register_error}>This user already exists.</Text>
+        )}
       </View>
     </View>
   );

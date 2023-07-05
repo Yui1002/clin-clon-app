@@ -63,6 +63,8 @@ class Repositories {
 
         try {
           const sql = "INSERT INTO public.users (user_id, owner_id, first_name, last_name, user_name, rate, rate_type, status, update_date, update_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);";
+          const data = await client.query(sql, [uuid, user.ownerId, user.firstName, user.lastName, user.username, user.rate, user.rateType, user.status, user.updateDate, user.updateBy]);
+          return data.rowCount;
         } catch(err) {
             console.log('error: ', err);
             return err;
@@ -77,7 +79,8 @@ class Repositories {
         try {
           const sql = "SELECT owner_id FROM public.owners WHERE email_address = $1;";
           const data = await client.query(sql, [email]);
-          console.log('data: ', data);
+          console.log('owner id: ', data);
+          return data.rows[0].owner_id;
         } catch(err) {
             return err;
         } finally {

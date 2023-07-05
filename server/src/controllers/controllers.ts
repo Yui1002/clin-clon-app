@@ -23,8 +23,8 @@ class Controllers {
         if (isRegistered) {
             res.status(400).send('User is already registered');
         } else {
-            // const ownerId = await this.models.getOwnerId(req.body.ownerEmail)
             const response = await this.models.addUser(req.body);
+            Number(response) > 0 ? res.sendStatus(200) : res.sendStatus(400);
         }
     }
 }

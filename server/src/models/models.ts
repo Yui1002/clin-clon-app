@@ -34,8 +34,10 @@ class Models {
     }
 
     async addUser(user: UserInterface) {
+        // need to get the belonged owner from the owner's email
         const ownerId = await this.getOwnerId(user.ownerEmail);
         user.ownerId = ownerId;
+        user.updateBy = user.ownerEmail;
         return await this.repositories.addUser(user);
     }
 }
