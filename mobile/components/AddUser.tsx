@@ -1,4 +1,4 @@
-import {View, Text, TextInput, Button} from 'react-native';
+import {View, Text, TextInput, Button, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/styles';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -30,7 +30,13 @@ const AddUser = ({route}: any) => {
     validateRate();
     validateRateType();
 
-    if (firstNameError || lastNameError || usernameError || rateError || rateTypeError) {
+    if (
+      firstNameError ||
+      lastNameError ||
+      usernameError ||
+      rateError ||
+      rateTypeError
+    ) {
       return;
     }
 
@@ -63,7 +69,7 @@ const AddUser = ({route}: any) => {
   };
 
   const validateRate = () => {
-    typeof rate !== 'number' ? setRateError(true) : setRateError(false); 
+    typeof rate !== 'number' ? setRateError(true) : setRateError(false);
   };
 
   const validateRateType = () => {
@@ -72,56 +78,83 @@ const AddUser = ({route}: any) => {
       : setRateTypeError(true);
   };
 
+  const renderItem = ({item}) => {
+    return (
+      <View style={styles.list_user_header}>
+        <Text style={styles.list_user_header_text}>{item}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Add User</Text>
-      <View style={styles.add_user_container}>
-        <View style={styles.add_user_sub_container}>
-          <Text>first name *</Text>
-          <TextInput
-            style={styles.add_user_name}
-            onChangeText={text => setFirstName(text)}
-          />
-        </View>
-        <View style={styles.add_user_sub_container}>
-          <Text>last name *</Text>
-          <TextInput
-            style={styles.add_user_name}
-            onChangeText={text => setLastName(text)}
-          />
-        </View>
-        <View style={styles.add_user_sub_container}>
-          <Text>username *</Text>
-          <TextInput
-            style={styles.add_user_name}
-            autoCapitalize="none"
-            onChangeText={text => setUsername(text)}
+      <View>
+        <Text style={styles.title}>List User</Text>
+        <View>
+          <FlatList
+            data={[
+              'First Name',
+              'Last Name',
+              'Username',
+              'Rate',
+              'Rate Type',
+              'Status',
+            ]}
+            renderItem={renderItem}
+            numColumns={6}
           />
         </View>
       </View>
-      <View style={styles.add_user_container}>
-        <View style={styles.add_user_sub_container}>
-          <Text>rate *</Text>
-          <TextInput
-            style={styles.add_user_name}
-            onChangeText={text => setRate(Number(text))}
-          />
+      <View>
+        <Text style={styles.title}>Add User</Text>
+        <View style={styles.add_user_container}>
+          <View style={styles.add_user_sub_container}>
+            <Text>first name *</Text>
+            <TextInput
+              style={styles.add_user_name}
+              onChangeText={text => setFirstName(text)}
+            />
+          </View>
+          <View style={styles.add_user_sub_container}>
+            <Text>last name *</Text>
+            <TextInput
+              style={styles.add_user_name}
+              onChangeText={text => setLastName(text)}
+            />
+          </View>
+          <View style={styles.add_user_sub_container}>
+            <Text>username *</Text>
+            <TextInput
+              style={styles.add_user_name}
+              autoCapitalize="none"
+              onChangeText={text => setUsername(text)}
+            />
+          </View>
         </View>
-        <View style={styles.add_user_sub_container}>
-          <Text>rate type *</Text>
-          <DropDownPicker
-            onChangeValue={text => setRateType(text)}
-            style={styles.add_user_name}
-            open={open}
-            value={value}
-            items={items}
-            setItems={setItems}
-            setValue={setValue}
-            onPress={() => setOpen(!open)}
-          />
-        </View>
-        <View style={styles.add_user_btn}>
-          <Button title="Add" color="#fff" onPress={addUser} />
+        <View style={styles.add_user_container}>
+          <View style={styles.add_user_sub_container}>
+            <Text>rate *</Text>
+            <TextInput
+              style={styles.add_user_name}
+              onChangeText={text => setRate(Number(text))}
+            />
+          </View>
+          <View style={styles.add_user_sub_container}>
+            <Text>rate type *</Text>
+            <DropDownPicker
+              onChangeValue={text => setRateType(text)}
+              style={styles.add_user_name}
+              open={open}
+              value={value}
+              items={items}
+              setItems={setItems}
+              setValue={setValue}
+              onPress={() => setOpen(!open)}
+            />
+          </View>
+          <View style={styles.add_user_btn}>
+            <Button title="Add" color="#fff" onPress={addUser} />
+          </View>
         </View>
       </View>
     </View>

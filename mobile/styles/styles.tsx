@@ -132,6 +132,13 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     backgroundColor: '#2089DC',
   },
+  list_user_header: {
+    margin: 2,
+  },
+  list_user_header_text: {
+    fontSize: 10,
+    backgroundColor: 'lightblue'
+  },
 });
 
 export default styles;
