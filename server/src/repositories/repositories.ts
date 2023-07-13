@@ -50,7 +50,6 @@ class Repositories {
             const data = await client.query(sql, [uuid, owner.firstName, owner.lastName, owner.email, owner.status, owner.createDate, owner.password]);
             return data.rowCount;
         } catch(err) {
-            console.log('error: ', err);
             return err;
         } finally {
             client.release();
@@ -66,7 +65,6 @@ class Repositories {
           const data = await client.query(sql, [uuid, user.ownerId, user.firstName, user.lastName, user.username, user.rate, user.rateType, user.status, user.updateDate, user.updateBy]);
           return data.rowCount;
         } catch(err) {
-            console.log('error: ', err);
             return err;
         } finally {
             client.release();
@@ -99,6 +97,20 @@ class Repositories {
         } finally {
             client.release();
         }
+   }
+
+   async getOwnerPassword(email: string) {
+    const client = await pool.connect();
+
+    try {
+        const sql = "SELECT owner_password FROM public.owners WHERE email_address = $1;";
+        const data = await client.query(sql, [email]);
+        return data.rows[0].owner_password;
+    } catch(err) {
+        return err;
+    } finally {
+        client.release();
+    }
    }
 }
 

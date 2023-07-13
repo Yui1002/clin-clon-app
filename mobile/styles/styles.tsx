@@ -4,6 +4,9 @@ export const common_styles = StyleSheet.create({
   container: {
     margin: '5%',
   },
+  sub_container: {
+    marginBottom: 10,
+  },
   btn: {
     width: '44%',
     height: 40,
@@ -14,12 +17,34 @@ export const common_styles = StyleSheet.create({
     marginRight: 'auto',
     backgroundColor: '#2089DC',
   },
+  error_message: {
+    fontSize: 10,
+    color: 'red',
+  },
 });
 
 export const starter_styles = StyleSheet.create({
   title: {
     fontSize: 30,
+    fontWeight: 'bold',
     textAlign: 'center',
+  },
+});
+
+export const sign_in_styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  input_field: {
+    height: 40,
+    borderWidth: 1,
+    width: '90%',
+  },
+  authentication: {
+    textDecorationColor: '#000',
+    textDecorationLine: 'underline',
   },
 });
 

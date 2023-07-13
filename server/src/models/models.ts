@@ -20,6 +20,12 @@ class Models {
         return dataCount > 0;
     }
 
+    async isPasswordMatch(email: string, password: string) {
+        const hashedPassword = await this.repositories.getOwnerPassword(email);
+        const isMatch = await bcrypt.compare(password, hashedPassword);
+        return isMatch;
+    }
+
     async registerOwner(owner: OwnerInterface) {
         if (owner.password !== null) {
             const saltRounds = 10;
