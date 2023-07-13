@@ -53,12 +53,13 @@ const SignIn = ({navigation}: any) => {
         email: email,
         password: authStyle === 'password' ? password : null,
       });
-      console.log('response: ', response)
       if (response.status === 200) {
         navigation.navigate('Setup', {ownerEmail: email});
       }
     } catch (err) {
       setSignInError(true);
+    } finally {
+      setSignInError(false);
     }
   };
 

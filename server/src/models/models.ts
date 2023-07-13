@@ -2,6 +2,9 @@ import Repositories from "../repositories/repositories";
 import { OwnerInterface } from "../interfaces/OwnerInterface";
 import { UserInterface } from "../interfaces/UserInterface";
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class Models {
     repositories: Repositories;
@@ -33,6 +36,13 @@ class Models {
             owner.password = hashedPassword;
         }
         return await this.repositories.registerOwner(owner);
+    }
+
+    async createToken(ownerEmail: string) {
+        const tokenPayload = {email: ownerEmail}
+        const expiresIn = {expiresIn: '30m'};
+        const token = jwt.sign(tokenPayload, process.env.TOKEN_KEY, expiresIn);
+        return token;
     }
 
     async getOwnerId(email: string) {
