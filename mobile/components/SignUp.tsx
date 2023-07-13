@@ -16,7 +16,7 @@ const rules = [
   },
 ];
 
-const Register = ({navigation}: any) => {
+const SignUp = ({navigation}: any) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -155,7 +155,7 @@ const Register = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Join</Text>
+      <Text style={styles.title}>Sign Up</Text>
       <View style={styles.name_container}>
         <View style={styles.name_sub_container}>
           <Text>First Name *</Text>
@@ -242,7 +242,7 @@ const Register = ({navigation}: any) => {
         </View>
       ) : null}
       <View style={styles.joinBtn}>
-        <Button title="Join" color="#fff" onPress={() => onSubmit()} />
+        <Button title="Sign Up" color="#fff" onPress={() => onSubmit()} />
       </View>
       <View>
         {isDuplicate && (
@@ -253,4 +253,4 @@ const Register = ({navigation}: any) => {
   );
 };
 
-export default Register;
+export default SignUp;

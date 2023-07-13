@@ -1,5 +1,28 @@
 import {StyleSheet} from 'react-native';
 
+export const common_styles = StyleSheet.create({
+  container: {
+    margin: '5%',
+  },
+  btn: {
+    width: '44%',
+    height: 40,
+    borderRadius: 20,
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: '#2089DC',
+  },
+});
+
+export const starter_styles = StyleSheet.create({
+  title: {
+    fontSize: 30,
+    textAlign: 'center',
+  },
+});
+
 const styles = StyleSheet.create({
   container: {
     margin: '5%',
