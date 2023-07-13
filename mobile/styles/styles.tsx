@@ -132,12 +132,40 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     backgroundColor: '#2089DC',
   },
-  list_user_header: {
-    margin: 2,
+  list_user_container: {
+    // flex: 1,
+    // paddingHorizontal: 10,
   },
-  list_user_header_text: {
+  list_user_headerBox: {
+    flex: 1,
+    height: 30,
+    width: 20,
+    borderBottomWidth: 2,
+    borderRightWidth: 1,
+    borderTopWidth: 1,
+    borderRightColor: '#ccc',
+    borderTopColor: '#ccc',
+    flexGrow: 1,
+    flexBasis: 20,
+  },
+  list_user_box_text: {
     fontSize: 10,
-    backgroundColor: 'lightblue'
+  },
+  list_user_box: {
+    flex: 1,
+    height: 30,
+    width: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+    borderRightWidth: 1,
+    borderRightColor: '#ccc',
+    flexGrow: 1,
+    flexBasis: 20,
+  },
+  list_user_previewContainer: {
+    flexDirection: 'row',
+    borderLeftWidth: 1,
+    borderLeftColor: '#ccc',
   },
 });
 

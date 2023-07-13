@@ -17,8 +17,12 @@ class Controllers {
         }
     }
 
+    async getUsers(req: any, res:any) {
+        const users = await this.models.getUsers(req.params.email);
+        res.send(users);
+    }
+
     async addUser(req: any, res: any) {
-        console.log('request body: ', req.body)
         const isRegistered = await this.models.isUserRegistered(req.body.username);
         if (isRegistered) {
             res.status(400).send('User is already registered');

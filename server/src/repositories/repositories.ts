@@ -79,7 +79,6 @@ class Repositories {
         try {
           const sql = "SELECT owner_id FROM public.owners WHERE email_address = $1;";
           const data = await client.query(sql, [email]);
-          console.log('owner id: ', data);
           return data.rows[0].owner_id;
         } catch(err) {
             return err;
@@ -87,6 +86,20 @@ class Repositories {
             client.release();
         }
     }
+
+   async getUsers(ownerId: string) {
+        const client = await pool.connect();
+
+        try {
+            const sql = "SELECT first_name, last_name, user_name, rate, rate_type, status FROM users WHERE owner_id = $1;";
+            const data = await client.query(sql, [ownerId]);
+            return data.rows;
+        } catch(err) {
+            return err;
+        } finally {
+            client.release();
+        }
+   }
 }
 
 export default Repositories;

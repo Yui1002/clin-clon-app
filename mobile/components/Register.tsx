@@ -162,6 +162,7 @@ const Register = ({navigation}: any) => {
           <TextInput
             style={styles.input_name}
             onChangeText={text => onFirstNameChange(text)}
+            autoCorrect={false}
           />
           {firstNameError && (
             <Text style={styles.form_input_error}>First name is required</Text>
@@ -172,6 +173,7 @@ const Register = ({navigation}: any) => {
           <TextInput
             style={styles.input_name}
             onChangeText={text => onLastNameChange(text)}
+            autoCorrect={false}
           />
           {lastNameError && (
             <Text style={styles.form_input_error}>Last name is required</Text>
@@ -184,6 +186,7 @@ const Register = ({navigation}: any) => {
           style={styles.input_email}
           autoCapitalize="none"
           onChangeText={text => onEmailChange(text)}
+          autoCorrect={false}
         />
         {emailError && (
           <Text style={styles.form_input_error}>Invalid email format</Text>
@@ -220,6 +223,7 @@ const Register = ({navigation}: any) => {
             style={styles.input_password}
             autoCapitalize="none"
             onChangeText={text => onPasswordChange(text)}
+            autoCorrect={false}
           />
           {rules.map(rule => {
             const cn = password && password.match(rule.pattern);

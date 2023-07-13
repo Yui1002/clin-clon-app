@@ -7,14 +7,6 @@ import {LOCAL_HOST_URL} from '../config.js';
 import constant from '../parameters/constant';
 
 const AddUser = ({route}: any) => {
-  // const [items, setItems] = useState([
-  //   {label: 'Hourly', value: 'hourly'},
-  //   {label: 'Daily', value: 'daily'},
-  // ]);
-  // const [statusOptions, setStatusOptions] = useState([
-  //   {label: 'Active', value: 'active'},
-  //   {label: 'Inactive', value: 'inactive'},
-  // ]);
   const [rateTypeOpen, setRateTypeOpen] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -30,6 +22,11 @@ const AddUser = ({route}: any) => {
   const [rateTypeError, setRateTypeError] = useState(false);
   const [statusError, setStatusError] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers(route.params.ownerEmail);
+  }, []);
 
   const addUser = async () => {
     validateFirstName();
@@ -61,10 +58,21 @@ const AddUser = ({route}: any) => {
         updateDate: new Date(),
         ownerEmail: route.params.ownerEmail,
       });
+      console.log(response.status);
+      getUsers(route.params.ownerEmail);
     } catch (err) {
       setIsDuplicate(true);
     } finally {
       setIsDuplicate(false);
+    }
+  };
+
+  const getUsers = async (ownerEmail: string) => {
+    try {
+      const response = await axios.get(`${LOCAL_HOST_URL}/users/${ownerEmail}`);
+      setUsers(response.data);
+    } catch (err) {
+      console.log('error in getting users: ', err);
     }
   };
 
@@ -96,32 +104,38 @@ const AddUser = ({route}: any) => {
       : setStatusError(true);
   };
 
-  const renderItem = ({item}) => {
-    return (
-      <View style={styles.list_user_header}>
-        <Text style={styles.list_user_header_text}>{item}</Text>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.title}>List User</Text>
-        <View>
-          <FlatList
-            data={[
-              'First Name',
-              'Last Name',
-              'Username',
-              'Rate',
-              'Rate Type',
-              'Status',
-            ]}
-            renderItem={renderItem}
-            numColumns={6}
-          />
-        </View>
+        {users.length < 1 ? (
+          <View>
+            <Text>No user found</Text>
+          </View>
+        ) : (
+          <View style={styles.list_user_container}>
+            <View style={styles.list_user_previewContainer}>
+              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>first name</Text></View>
+              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>last name</Text></View>
+              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>username</Text></View>
+              <View style={[styles.list_user_headerBox, {flexBasis: 2}]}><Text style={styles.list_user_box_text}>rate</Text></View>
+              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>rate type</Text></View>
+              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>status</Text></View>
+            </View>
+            <View>
+              {users.map(user => (
+                <View style={styles.list_user_previewContainer}>
+                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.first_name}</Text></View>
+                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.last_name}</Text></View>
+                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.user_name}</Text></View>
+                  <View style={[styles.list_user_box, {flexBasis: 2}]}><Text style={styles.list_user_box_text}>{user.rate}</Text></View>
+                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.rate_type}</Text></View>
+                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.status}</Text></View>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
       </View>
       <View>
         <Text style={styles.title}>Add User</Text>
@@ -131,6 +145,7 @@ const AddUser = ({route}: any) => {
             <TextInput
               style={styles.add_user_name}
               onChangeText={text => setFirstName(text)}
+              autoCorrect={false}
             />
           </View>
           <View style={styles.add_user_sub_container}>
@@ -138,6 +153,7 @@ const AddUser = ({route}: any) => {
             <TextInput
               style={styles.add_user_name}
               onChangeText={text => setLastName(text)}
+              autoCorrect={false}
             />
           </View>
           <View style={styles.add_user_sub_container}>
@@ -146,6 +162,7 @@ const AddUser = ({route}: any) => {
               style={styles.add_user_name}
               autoCapitalize="none"
               onChangeText={text => setUsername(text)}
+              autoCorrect={false}
             />
           </View>
         </View>
@@ -155,6 +172,7 @@ const AddUser = ({route}: any) => {
             <TextInput
               style={styles.add_user_name}
               onChangeText={text => setRate(Number(text))}
+              autoCorrect={false}
             />
           </View>
           <View style={styles.add_user_sub_container}>
