@@ -17,8 +17,10 @@ class Controllers {
             res.status(400).send('Owner is already registered');
         } else {
             const response = await this.models.registerOwner(req.body);
-            const token = await this.models.createToken(req.body.email);
-            Number(response) > 0 ? res.status(200).json({ status: 'success', message: 'User Registered', data: {token}}) : res.sendStatus(400);
+            // const token = await this.models.generateToken(req.body.email);
+            // res.cookie("token", token, {maxAge: 300000})
+            // Number(response) > 0 ? res.status(200).json({ status: 'success', message: 'User Registered', data: {Accesstoken: token}}) : res.sendStatus(400);
+            Number(response) > 0 ? res.sendStatus(200) : res.sendStatus(400);
         }
     }
 
@@ -32,8 +34,12 @@ class Controllers {
                 res.status(400).send('Password does not match');
                 return;
             }
-            const token = await this.models.createToken(req.body.email);
-            res.status(200).json({ status: 'success', message: 'User Logged In', data: {token}})
+            // const token = await this.models.generateToken(req.body.email);
+            // res.status(200).json({ status: 'success', message: 'User Logged In', data: {Accesstoken: token}})
+            // if email and password match, establish a session 
+            const session = req.session;
+            session.userId = req.body.email;
+            res.status(200).send('successfully login')
         }
     }
 

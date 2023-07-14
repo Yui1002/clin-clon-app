@@ -38,7 +38,7 @@ class Models {
         return await this.repositories.registerOwner(owner);
     }
 
-    async createToken(ownerEmail: string) {
+    async generateToken(ownerEmail: string) {
         const tokenPayload = {email: ownerEmail}
         const expiresIn = {expiresIn: '30m'};
         const token = jwt.sign(tokenPayload, process.env.TOKEN_KEY, expiresIn);

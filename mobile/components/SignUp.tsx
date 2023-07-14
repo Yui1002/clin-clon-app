@@ -105,11 +105,11 @@ const SignUp = ({navigation}: any) => {
         email: email,
         status: 'active',
         password: OTPSelected ? null : password,
-        // authStyle: authStyle,
         createDate: new Date(),
       });
       if (response.status === 200) {
-        navigation.navigate('Setup', {ownerEmail: email});
+        const authType = passwordSelected ? 'password' : 'OTP';
+        navigation.navigate('SignIn', {authType: authType});
       }
     } catch (e) {
       setIsDuplicate(true);

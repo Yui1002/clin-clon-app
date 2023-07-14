@@ -5,7 +5,9 @@ import axios from 'axios';
 import validator from 'validator';
 import {LOCAL_HOST_URL} from '../config.js';
 
-const SignIn = ({navigation}: any) => {
+const SignIn = ({navigation, route}: any) => {
+  const {authType} = route.params;
+  console.log('auth type: ', authType);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [authStyle, setAuthStyle] = useState('');
@@ -82,28 +84,7 @@ const SignIn = ({navigation}: any) => {
           )}
         </View>
         <View>
-          <Text>Authentication *</Text>
-          <Text>
-            <Text
-              style={sign_in_styles.authentication}
-              onPress={() => onSelect('OTP')}>
-              Send OTP
-            </Text>
-            <Text> or </Text>
-            <Text
-              style={sign_in_styles.authentication}
-              onPress={() => onSelect('password')}>
-              Password
-            </Text>
-          </Text>
-          {!isSelected && (
-            <View>
-              <Text style={common_styles.error_message}>
-                Please select OTP or password
-              </Text>
-            </View>
-          )}
-          {authStyle === 'password' && (
+          {authType === 'password' && (
             <View>
               <Text>Password *</Text>
               <TextInput
@@ -116,6 +97,11 @@ const SignIn = ({navigation}: any) => {
                   Password is required
                 </Text>
               )}
+            </View>
+          )}
+          {authType === 'OTP' && (
+            <View>
+              <Text style={sign_in_styles.authentication}>Send code</Text>
             </View>
           )}
         </View>

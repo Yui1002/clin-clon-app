@@ -115,22 +115,54 @@ const AddUser = ({route}: any) => {
         ) : (
           <View style={styles.list_user_container}>
             <View style={styles.list_user_previewContainer}>
-              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>first name</Text></View>
-              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>last name</Text></View>
-              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>username</Text></View>
-              <View style={[styles.list_user_headerBox, {flexBasis: 2}]}><Text style={styles.list_user_box_text}>rate</Text></View>
-              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>rate type</Text></View>
-              <View style={styles.list_user_headerBox}><Text style={styles.list_user_box_text}>status</Text></View>
+              <View style={styles.list_user_headerBox}>
+                <Text style={styles.list_user_box_text}>first name</Text>
+              </View>
+              <View style={styles.list_user_headerBox}>
+                <Text style={styles.list_user_box_text}>last name</Text>
+              </View>
+              <View style={styles.list_user_headerBox}>
+                <Text style={styles.list_user_box_text}>username</Text>
+              </View>
+              <View style={[styles.list_user_headerBox, {flexBasis: 2}]}>
+                <Text style={styles.list_user_box_text}>rate</Text>
+              </View>
+              <View style={styles.list_user_headerBox}>
+                <Text style={styles.list_user_box_text}>rate type</Text>
+              </View>
+              <View style={styles.list_user_headerBox}>
+                <Text style={styles.list_user_box_text}>status</Text>
+              </View>
             </View>
             <View>
               {users.map(user => (
                 <View style={styles.list_user_previewContainer}>
-                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.first_name}</Text></View>
-                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.last_name}</Text></View>
-                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.user_name}</Text></View>
-                  <View style={[styles.list_user_box, {flexBasis: 2}]}><Text style={styles.list_user_box_text}>{user.rate}</Text></View>
-                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.rate_type}</Text></View>
-                  <View style={styles.list_user_box}><Text style={styles.list_user_box_text}>{user.status}</Text></View>
+                  <View style={styles.list_user_box}>
+                    <Text style={styles.list_user_box_text}>
+                      {user.first_name}
+                    </Text>
+                  </View>
+                  <View style={styles.list_user_box}>
+                    <Text style={styles.list_user_box_text}>
+                      {user.last_name}
+                    </Text>
+                  </View>
+                  <View style={styles.list_user_box}>
+                    <Text style={styles.list_user_box_text}>
+                      {user.user_name}
+                    </Text>
+                  </View>
+                  <View style={[styles.list_user_box, {flexBasis: 2}]}>
+                    <Text style={styles.list_user_box_text}>{user.rate}</Text>
+                  </View>
+                  <View style={styles.list_user_box}>
+                    <Text style={styles.list_user_box_text}>
+                      {user.rate_type}
+                    </Text>
+                  </View>
+                  <View style={styles.list_user_box}>
+                    <Text style={styles.list_user_box_text}>{user.status}</Text>
+                  </View>
                 </View>
               ))}
             </View>
@@ -139,64 +171,61 @@ const AddUser = ({route}: any) => {
       </View>
       <View>
         <Text style={styles.title}>Add User</Text>
-        <View style={styles.add_user_container}>
-          <View style={styles.add_user_sub_container}>
-            <Text>first name *</Text>
-            <TextInput
-              style={styles.add_user_name}
-              onChangeText={text => setFirstName(text)}
-              autoCorrect={false}
-            />
-          </View>
-          <View style={styles.add_user_sub_container}>
-            <Text>last name *</Text>
-            <TextInput
-              style={styles.add_user_name}
-              onChangeText={text => setLastName(text)}
-              autoCorrect={false}
-            />
-          </View>
-          <View style={styles.add_user_sub_container}>
-            <Text>username *</Text>
-            <TextInput
-              style={styles.add_user_name}
-              autoCapitalize="none"
-              onChangeText={text => setUsername(text)}
-              autoCorrect={false}
-            />
-          </View>
+        <View>
+          <Text>first name *</Text>
+          <TextInput
+            style={styles.add_user_name}
+            onChangeText={text => setFirstName(text)}
+            autoCorrect={false}
+          />
         </View>
-        <View style={styles.add_user_container}>
-          <View style={styles.add_user_sub_container}>
-            <Text>rate *</Text>
-            <TextInput
-              style={styles.add_user_name}
-              onChangeText={text => setRate(Number(text))}
-              autoCorrect={false}
-            />
-          </View>
-          <View style={styles.add_user_sub_container}>
-            <Text>rate type *</Text>
-            <DropDownPicker
-              open={rateTypeOpen}
-              value={rateType}
-              items={constant.rateType}
-              setOpen={() => setRateTypeOpen(!rateTypeOpen)}
-              setValue={val => setRateType(val)}
-              // setItems={item => setItems(item)}
-            />
-          </View>
-          <View style={styles.add_user_sub_container}>
-            <Text>status</Text>
-            <DropDownPicker
-              open={statusOpen}
-              value={status}
-              items={constant.status}
-              setOpen={() => setStatusOpen(!statusOpen)}
-              setValue={val => setStatus(val)}
-            />
-          </View>
+        <View>
+          <Text>last name *</Text>
+          <TextInput
+            style={styles.add_user_name}
+            onChangeText={text => setLastName(text)}
+            autoCorrect={false}
+          />
         </View>
+        <View>
+          <Text>username *</Text>
+          <TextInput
+            style={styles.add_user_name}
+            autoCapitalize="none"
+            onChangeText={text => setUsername(text)}
+            autoCorrect={false}
+          />
+        </View>
+        <View>
+          <Text>rate *</Text>
+          <TextInput
+            style={styles.add_user_name}
+            onChangeText={text => setRate(Number(text))}
+            autoCorrect={false}
+          />
+        </View>
+        <View>
+          <Text>rate type *</Text>
+          <DropDownPicker
+            open={rateTypeOpen}
+            value={rateType}
+            items={constant.rateType}
+            setOpen={() => setRateTypeOpen(!rateTypeOpen)}
+            setValue={val => setRateType(val)}
+            // setItems={item => setItems(item)}
+          />
+        </View>
+        <View>
+          <Text>status</Text>
+          <DropDownPicker
+            open={statusOpen}
+            value={status}
+            items={constant.status}
+            setOpen={() => setStatusOpen(!statusOpen)}
+            setValue={val => setStatus(val)}
+          />
+        </View>
+
         <View style={styles.add_user_btn}>
           <Button title="Add" color="#fff" onPress={addUser} />
         </View>
